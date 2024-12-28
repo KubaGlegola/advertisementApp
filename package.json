@@ -1,0 +1,15 @@
+{
+  "name": "nodejs-next-app",
+  "workspaces": [
+    "frontend",
+    "backend"
+  ],
+  "dependencies": {
+    "npm-run-all": "^4.1.5"
+  },
+  "scripts": {
+    "front-end": "npm run dev --workspace=frontend",
+    "back-end": "npm run dev --workspace=backend",
+    "dev": "npm-run-all --parallel front-end back-end "
+  }
+}
