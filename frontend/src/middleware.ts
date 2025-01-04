@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { decrypt } from "@/lib/session";
 
-const protectedRoutes = ["/"];
+const protectedRoutes: string[] = [];
 const adminRoutes = ["/dashboard"];
 
 export default async function middleware(req: NextRequest) {
@@ -26,7 +26,7 @@ export default async function middleware(req: NextRequest) {
   }
 
   if (isAdminRoute && session?.role !== "admin") {
-    return NextResponse.redirect(new URL("/", req.nextUrl));
+    return NextResponse.redirect(new URL("/access-denied", req.nextUrl));
   }
 
   return NextResponse.next();
