@@ -50,7 +50,12 @@ authRouter.post("/login", async (req, res) => {
   }
 
   const token = jwt.sign(
-    { email: user.email, role: user.role },
+    {
+      userId: user.userId,
+      email: user.email,
+      role: user.role,
+      validUntil: Date.now() + 1000 * 60 * 15,
+    },
     process.env.AUTH_SECRET as string,
     {
       algorithm: "HS256",
@@ -61,7 +66,7 @@ authRouter.post("/login", async (req, res) => {
     httpOnly: true,
     secure: true,
     sameSite: "none",
-    expires: new Date(Date.now() + 1000 * 60 * 1),
+    expires: new Date(Date.now() + 1000 * 60 * 15),
   });
 
   res.status(200).json({ message: "Logged in", status: "success" });

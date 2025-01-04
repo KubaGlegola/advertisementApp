@@ -6,13 +6,9 @@ export async function decrypt(cookie: string | undefined) {
   }
 
   try {
-    const { payload } = await jwtVerify(
-      cookie,
-      new TextEncoder().encode(process.env.JWT_SECRET),
-      {
-        algorithms: ["HS256"],
-      }
-    );
+    const { payload } = await jwtVerify(cookie, new TextEncoder().encode(process.env.JWT_SECRET), {
+      algorithms: ["HS256"],
+    });
 
     return payload;
   } catch (error) {
