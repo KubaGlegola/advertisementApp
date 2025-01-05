@@ -1,5 +1,5 @@
-import { CustomSidebarTrigger } from "@/components/DashboardSidebar/CustomSidebarTrigger";
-import { DashboardSidebar } from "@/components/DashboardSidebar/DashboardSidebar";
+import { CustomSidebarTrigger } from "@/components/Dashboard/DashboardSidebar/CustomSidebarTrigger";
+import { DashboardSidebar } from "@/components/Dashboard/DashboardSidebar/DashboardSidebar";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { Toaster } from "@/components/ui/toaster";
 
