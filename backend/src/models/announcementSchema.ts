@@ -1,0 +1,44 @@
+import mongoose, { Schema } from "mongoose";
+
+const announcementSchema = new Schema({
+  id: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  name: {
+    type: String,
+    required: true,
+  },
+  images: [
+    {
+      type: String,
+    },
+  ],
+  price: {
+    type: Number,
+    required: true,
+  },
+  category: {
+    type: String,
+    required: true,
+  },
+  description: {
+    type: String,
+    required: true,
+  },
+  location: {
+    type: String,
+    required: true,
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
+  createdBy: {
+    type: String,
+    required: true,
+  },
+});
+
+export default mongoose.model("Announcement", announcementSchema);
