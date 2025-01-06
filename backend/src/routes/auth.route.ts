@@ -1,80 +1,12 @@
 import express from "express";
-import bcrypt from "bcrypt";
-import { v4 as uuidv4 } from "uuid";
-import userSchema from "../models/userSchema";
-import jwt from "jsonwebtoken";
+import authController from "../controllers/auth.controller";
+import { validateRequestBody } from "../middlewares/validateRequestBody";
+import registerSchema from "../schemas/auth/register.schema";
+import loginSchema from "../schemas/auth/login.schema";
 
 const authRouter = express.Router();
 
-authRouter.post("/register", async (req, res) => {
-  const { email, password, role, name } = req.body;
-
-  if (!email || !password || !name) {
-    res.status(400).send("Invalid request");
-    return;
-  }
-
-  const hashedPassword = await bcrypt.hash(password, 10);
-  const userId = uuidv4();
-
-  const user = new userSchema({ userId, email, password: hashedPassword, role, name });
-
-  try {
-    await user.save();
-    res.status(201).send("User created");
-  } catch (err) {
-    res.status(400).send(err);
-  }
-});
-
-authRouter.post("/login", async (req, res) => {
-  const { email, password } = req.body;
-
-  if (!email || !password) {
-    res.status(400).send("Invalid request");
-    return;
-  }
-
-  const user = await userSchema.findOne({ email });
-
-  if (!user) {
-    res.status(404).send("User not found");
-    return;
-  }
-
-  const isPasswordValid = await bcrypt.compare(password, user.password);
-
-  if (!isPasswordValid) {
-    res.status(401).send("Invalid password");
-    return;
-  }
-
-  const token = jwt.sign(
-    {
-      userId: user.userId,
-      email: user.email,
-      role: user.role,
-      validUntil: Date.now() + 1000 * 60 * 15,
-    },
-    process.env.AUTH_SECRET as string,
-    {
-      algorithm: "HS256",
-    }
-  );
-
-  res.cookie("session", token, {
-    httpOnly: true,
-    secure: true,
-    sameSite: "none",
-    expires: new Date(Date.now() + 1000 * 60 * 15),
-  });
-
-  res.status(200).json({ message: "Logged in", status: "success" });
-});
-
-authRouter.post("/logout", (req, res) => {
-  res.clearCookie("session");
-  res.status(200).send("Logged out");
-});
+authRouter.post("/register", validateRequestBody(registerSchema), authController.register);
+authRouter.post("/login", validateRequestBody(loginSchema), authController.login);
 
 export default authRouter;

@@ -7,9 +7,7 @@ import cors from "cors";
 import path from "path";
 import fs from "fs";
 import { verifyToken } from "./middlewares/verifyToken";
-import authRouter from "./routes/auth.route";
-import categoryRouter from "./routes/category.route";
-import multer from "multer";
+import router from "./routes";
 
 dotenv.config();
 const port = 5000;
@@ -29,28 +27,13 @@ const uploadDir = path.join(__dirname, "uploads");
 if (!fs.existsSync(uploadDir)) {
   fs.mkdirSync(uploadDir);
 }
-
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, uploadDir);
-  },
-  filename: (req, file, cb) => {
-    const ext = path.extname(file.originalname);
-    cb(null, `${file.fieldname}-${Date.now()}${ext}`);
-  },
-});
-
-const upload = multer({ storage });
-
 app.use("/uploads", express.static(uploadDir));
+
+app.use(router);
 
 app.get("/", verifyToken, (req, res) => {
   res.send("Hello");
 });
-
-app.use("/auth", authRouter);
-
-app.use("/category", upload.single("file"), categoryRouter);
 
 app.use((err: any, req: Request, res: Response, next: NextFunction) => {
   const statusCode = err.statusCode || 500;
