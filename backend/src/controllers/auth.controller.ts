@@ -12,7 +12,7 @@ async function login(req: Request, res: Response) {
       httpOnly: true,
       secure: true,
       sameSite: "none",
-      expires: new Date(Date.now() + 1000 * 60 * 15),
+      expires: new Date(Date.now() + 1000 * 60 * 60),
     });
 
     res.status(200).json({ message: "Logged in" });

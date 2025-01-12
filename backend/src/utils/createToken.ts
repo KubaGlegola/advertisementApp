@@ -6,7 +6,7 @@ export const createToken = (userId: string, email: string, role: string) => {
       userId,
       email,
       role,
-      validUntil: Date.now() + 1000 * 60 * 15,
+      validUntil: Date.now() + 1000 * 60 * 60,
     },
     process.env.AUTH_SECRET as string,
     {
