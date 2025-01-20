@@ -1,7 +1,14 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -33,6 +40,7 @@ export default function AddCategoryPage() {
     const res = await fetch(`http://localhost:5000/category`, {
       method: "POST",
       body: formData,
+      credentials: "include",
     });
 
     if (res.ok) {
@@ -66,7 +74,7 @@ export default function AddCategoryPage() {
               <FormControl>
                 <Input
                   type="file"
-                  accept="image/png, image/jpeg, image/webp"
+                  accept="image/png, image/jpeg, image/webp, image/svg+xml"
                   onChange={(e) => field.onChange(e.target.files)}
                   required
                 />

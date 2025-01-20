@@ -29,6 +29,10 @@ export default async function middleware(req: NextRequest) {
     return NextResponse.redirect(new URL("/access-denied", req.nextUrl));
   }
 
+  if (session && path === "/login") {
+    return NextResponse.redirect(new URL("/", req.nextUrl));
+  }
+
   return NextResponse.next();
 }
 

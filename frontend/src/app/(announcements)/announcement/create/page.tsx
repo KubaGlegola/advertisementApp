@@ -1,5 +1,5 @@
 import { AnnouncementForm } from "@/components/Announcements/AnnouncementForm/AnnouncementForm";
-import { Wrapper } from "@/components/Shared/Wrapper/Wrapper";
+import { Wrapper } from "@/components/Shared/Wrapper";
 import { CategoryType } from "@/types/category";
 
 export default async function CreateAnnouncementPage() {
