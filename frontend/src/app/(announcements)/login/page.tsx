@@ -5,7 +5,14 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 import { Button } from "@/components/ui/button";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
@@ -15,7 +22,10 @@ const formSchema = z.object({
   password: z.string().min(8, { message: "Password must be at least 8 characters long" }),
 });
 
-export default function LoginPage() {
+type SearchParams = { [key: string]: string | undefined };
+
+export default function LoginPage({ searchParams }: { searchParams: SearchParams }) {
+  const { redirect } = searchParams;
   const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -36,7 +46,7 @@ export default function LoginPage() {
     });
 
     if (response.ok) {
-      router.push("/");
+      router.push(redirect || "/");
     }
   }
 

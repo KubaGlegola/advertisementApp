@@ -14,13 +14,17 @@ export default async function middleware(req: NextRequest) {
   const session = await decrypt(cookie);
 
   if (isProtectedRoute && !session) {
-    return NextResponse.redirect(new URL("/login", req.nextUrl));
+    const loginUrl = new URL("/login", req.nextUrl);
+    loginUrl.searchParams.set("redirect", req.nextUrl.pathname);
+    return NextResponse.redirect(loginUrl);
   }
 
   const validUntil = session?.validUntil as number;
 
   if (isProtectedRoute && validUntil && validUntil < Date.now()) {
-    const response = NextResponse.redirect(new URL("/login", req.nextUrl));
+    const loginUrl = new URL("/login", req.nextUrl);
+    loginUrl.searchParams.set("redirect", req.nextUrl.pathname);
+    const response = NextResponse.redirect(loginUrl);
     response.cookies.delete("session");
     return response;
   }

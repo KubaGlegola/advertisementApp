@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 export const formSchema = z.object({ search: z.string().nonempty() });
 
@@ -16,9 +17,10 @@ export function HeroSearch() {
     resolver: zodResolver(formSchema),
     defaultValues: {},
   });
+  const router = useRouter();
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+    router.push(`/announcements?search=${values.search}`);
   }
 
   return (
