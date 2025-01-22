@@ -14,6 +14,7 @@ import { AnnouncementImages } from "@/components/Announcements/AnnouncementForm/
 import { AnnouncementDescription } from "@/components/Announcements/AnnouncementForm/AnnouncementDescription";
 import { AnnouncementPrice } from "@/components/Announcements/AnnouncementForm/AnnouncementPrice";
 import { AnnouncementLocation } from "@/components/Announcements/AnnouncementForm/AnnouncementLocation";
+import { AnnouncementCondition } from "@/components/Announcements/AnnouncementForm/AnnouncementCondition";
 
 export const formSchema = z.object({
   title: z.string().min(8, {
@@ -29,6 +30,7 @@ export const formSchema = z.object({
     }),
   location: z.string().nonempty(),
   images: z.array(z.instanceof(File)).optional(),
+  condition: z.enum(["new", "used", "refurbished", "broken"]),
 });
 
 export function AnnouncementForm({ categories }: { categories: CategoryType[] }) {
@@ -46,6 +48,7 @@ export function AnnouncementForm({ categories }: { categories: CategoryType[] })
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 bg-white p-8">
         <AnnouncementTitle control={form.control} />
         <AnnouncementCategory form={form} categories={categories} />
+        <AnnouncementCondition control={form.control} />
         <AnnouncementImages form={form} />
         <AnnouncementDescription control={form.control} />
         <AnnouncementPrice control={form.control} />
