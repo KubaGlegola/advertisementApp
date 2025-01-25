@@ -1,6 +1,6 @@
 import { AnnouncementForm } from "@/components/Announcements/AnnouncementForm/AnnouncementForm";
 import { Wrapper } from "@/components/Shared/Wrapper";
-import { CategoryType } from "@/types/category";
+import { CategoryType } from "@/types/types";
 
 export default async function CreateAnnouncementPage() {
   const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/category`, {

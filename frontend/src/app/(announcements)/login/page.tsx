@@ -16,13 +16,12 @@ import {
 import { Input } from "@/components/ui/input";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { SearchParams } from "@/types/types";
 
 const formSchema = z.object({
   email: z.string().email({ message: "Invalid email address" }),
   password: z.string().min(8, { message: "Password must be at least 8 characters long" }),
 });
-
-type SearchParams = { [key: string]: string | undefined };
 
 export default function LoginPage({ searchParams }: { searchParams: SearchParams }) {
   const { redirect } = searchParams;
