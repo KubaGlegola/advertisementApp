@@ -2,7 +2,17 @@ import announcementSchema from "../models/announcementSchema";
 import { v4 as uuid } from "uuid";
 
 async function getAnnouncementById(id: string) {
-  return await announcementSchema.findOne({ id });
+  const announcement = await announcementSchema.findOneAndUpdate(
+    { id },
+    { $inc: { announcementViews: 1 } },
+    { new: true }
+  );
+
+  if (!announcement) {
+    throw new Error("Announcement not found");
+  }
+
+  return announcement;
 }
 
 async function getAllAnnouncements(page: number = 1, limit: number = 24) {

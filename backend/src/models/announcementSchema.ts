@@ -35,6 +35,10 @@ const announcementSchema = new Schema({
     type: String,
     required: true,
   },
+  announcementViews: {
+    type: Number,
+    default: 0,
+  },
   createdAt: {
     type: Date,
     default: Date.now,
