@@ -7,7 +7,7 @@ import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 
-import { CategoryType } from "@/types/category";
+import { CategoryType } from "@/types/types";
 import { AnnouncementTitle } from "@/components/Announcements/AnnouncementForm/AnnouncementTitle";
 import { AnnouncementCategory } from "@/components/Announcements/AnnouncementForm/AnnouncementCategory";
 import { AnnouncementImages } from "@/components/Announcements/AnnouncementForm/AnnouncementImages";
@@ -65,7 +65,7 @@ export function AnnouncementForm({ categories }: { categories: CategoryType[] })
     });
 
     if (!response.ok) {
-      toast({ description: "" });
+      toast({ description: "Error " });
     }
 
     const data = await response.json();
