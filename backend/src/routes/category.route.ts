@@ -15,16 +15,16 @@ categoryRouter.get("/:slug", categoryController.getOne);
 categoryRouter.post(
   "/",
   verifyToken,
-  validateRequestBody(addCategorySchema),
   upload.single("file"),
+  validateRequestBody(addCategorySchema),
   categoryController.create
 );
 
 categoryRouter.put(
   "/:slug",
   verifyToken,
-  validateRequestBody(updateCategorySchema),
   upload.single("file"),
+  validateRequestBody(updateCategorySchema),
   categoryController.update
 );
 

@@ -5,6 +5,8 @@ type UpdateAnnouncementSchema = {
   description?: string;
   price?: number;
   category?: string;
+  location?: string;
+  condition?: string;
 };
 
 const updateAnnouncementSchema: JSONSchemaType<UpdateAnnouncementSchema> = {
@@ -14,6 +16,8 @@ const updateAnnouncementSchema: JSONSchemaType<UpdateAnnouncementSchema> = {
     description: { type: "string", nullable: true },
     price: { type: "number", minimum: 0, nullable: true },
     category: { type: "string", nullable: true },
+    location: { type: "string", nullable: true },
+    condition: { type: "string", nullable: true },
   },
   required: [],
   additionalProperties: false,

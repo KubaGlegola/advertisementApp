@@ -5,6 +5,8 @@ type AddAnnouncementSchema = {
   description: string;
   price: number;
   category: string;
+  condition: string;
+  location: string;
 };
 
 const addAnnouncementSchema: JSONSchemaType<AddAnnouncementSchema> = {
@@ -14,8 +16,10 @@ const addAnnouncementSchema: JSONSchemaType<AddAnnouncementSchema> = {
     description: { type: "string" },
     price: { type: "number" },
     category: { type: "string" },
+    condition: { type: "string" },
+    location: { type: "string" },
   },
-  required: ["title", "description", "price", "category"],
+  required: ["title", "description", "price", "category", "condition", "location"],
   additionalProperties: false,
 };
 

@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import announcementService from "../services/announcement.service";
 import { decodeToken } from "../utils/decodeToken";
+import path from "path";
 
 async function getById(req: Request, res: Response) {
   const id = req.params.id;
@@ -39,6 +40,7 @@ async function getAll(req: Request, res: Response) {
 async function create(req: Request, res: Response, next: NextFunction) {
   try {
     const session = req.cookies.session;
+    console.log(session);
 
     const decodedSession = decodeToken(session);
 
@@ -46,8 +48,36 @@ async function create(req: Request, res: Response, next: NextFunction) {
       throw new Error("Invalid session");
     }
 
-    const { name, price, category, location } = req.body;
+    if (typeof decodedSession === "string" || !decodedSession.userId) {
+      throw new Error("Invalid session");
+    }
+
+    const { title, price, category, description, location, condition } = req.body;
     const files = req.files;
+
+    if (!files || !Array.isArray(files)) {
+      throw new Error("Images are required");
+    }
+
+    const images: string[] = [];
+    files.forEach((file: Express.Multer.File) => {
+      images.push(path.join("uploads", path.basename(file.path)));
+    });
+
+    const createdBy = decodedSession.userId;
+
+    const announcement = await announcementService.createAnnouncement(
+      title,
+      images,
+      price,
+      category,
+      description,
+      location,
+      condition,
+      createdBy
+    );
+
+    res.json(announcement).status(201);
   } catch (err) {
     console.log("Error in category create controller", err);
     next(err);

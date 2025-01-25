@@ -14,7 +14,6 @@ async function create(req: Request, res: Response, next: NextFunction) {
   try {
     const { name } = req.body;
     const file = req.file;
-
     if (!file) {
       throw new Error("File is required");
     }

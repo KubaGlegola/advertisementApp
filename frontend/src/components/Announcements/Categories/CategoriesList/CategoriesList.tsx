@@ -1,16 +1,18 @@
 import { CategoriesItem } from "@/components/Announcements/Categories/CategoriesItem/CategoriesItem";
-import { Wrapper } from "@/components/Shared/Wrapper/Wrapper";
+import { SectionTitle } from "@/components/Shared/SectionTitle";
+import { Wrapper } from "@/components/Shared/Wrapper";
 import { CategoryType } from "@/types/category";
 
 export async function CategoriesList() {
-  const res = await fetch(`${process.env.BACKEND_URL}/category`, { cache: "no-store" });
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/category`, { cache: "no-store" });
 
   const categories: CategoryType[] = await res.json();
 
   return (
-    <Wrapper customClass="py-12 lg:py-16">
-      <h2 className="text-3xl font-semibold text-center mb-6 lg:mb-8">Categories</h2>
-      <div className="flex flex-wrap gap-4 justify-center">
+    <Wrapper customClass="py-12 lg:py-16 w-full">
+      <SectionTitle>Categories</SectionTitle>
+
+      <div className="grid grid-cols-2 gap-4 sm:grid-cols-4 lg:grid-cols-4 w-full">
         {categories.map((category) => {
           return <CategoriesItem key={category.slug} category={category} />;
         })}

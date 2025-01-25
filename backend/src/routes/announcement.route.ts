@@ -15,15 +15,15 @@ announcementRouter.get("/user/:userId", announcementController.getByUser);
 announcementRouter.post(
   "/",
   verifyToken,
-  validateRequestBody(addAnnouncementSchema),
   upload.array("images"),
+  validateRequestBody(addAnnouncementSchema),
   announcementController.create
 );
 announcementRouter.put(
   "/:id",
   verifyToken,
-  validateRequestBody(updateAnnouncementSchema),
   upload.array("images"),
+  validateRequestBody(updateAnnouncementSchema),
   announcementController.update
 );
 announcementRouter.delete("/:id", verifyToken, announcementController.remove);
