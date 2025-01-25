@@ -11,7 +11,7 @@ export function CategoriesItem({ category }: { category: CategoryType }) {
       <div className="p-4 bg-primary-50 rounded-full shadow-sm shadow-primary-50">
         <Image
           className="w-9 h-9 "
-          src={`${process.env.BACKEND_URL}/${category.image}`}
+          src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/${category.image}`}
           alt={category.name}
           width={36}
           height={36}

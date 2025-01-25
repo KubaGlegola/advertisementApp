@@ -6,7 +6,7 @@ const announcementSchema = new Schema({
     required: true,
     unique: true,
   },
-  name: {
+  title: {
     type: String,
     required: true,
   },
@@ -28,6 +28,10 @@ const announcementSchema = new Schema({
     required: true,
   },
   location: {
+    type: String,
+    required: true,
+  },
+  condition: {
     type: String,
     required: true,
   },

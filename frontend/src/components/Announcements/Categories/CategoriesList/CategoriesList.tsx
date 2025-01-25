@@ -4,7 +4,7 @@ import { Wrapper } from "@/components/Shared/Wrapper";
 import { CategoryType } from "@/types/category";
 
 export async function CategoriesList() {
-  const res = await fetch(`${process.env.BACKEND_URL}/category`, { cache: "no-store" });
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/category`, { cache: "no-store" });
 
   const categories: CategoryType[] = await res.json();
 

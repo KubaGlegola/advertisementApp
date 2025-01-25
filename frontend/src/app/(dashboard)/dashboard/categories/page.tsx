@@ -4,7 +4,7 @@ import { Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export default async function CategoriesPage() {
-  const res = await fetch(`${process.env.BACKEND_URL}/category`, { cache: "no-store" });
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/category`, { cache: "no-store" });
   const categories = await res.json();
 
   return (
@@ -26,7 +26,7 @@ export default async function CategoriesPage() {
             className="bg-white p-4 shadow rounded-lg"
           >
             <Image
-              src={`${process.env.BACKEND_URL}/${category.image}`}
+              src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/${category.image}`}
               alt={category.name}
               className="aspect-square w-full max-w-96 mx-auto object-cover object-center rounded-lg"
               width={500}

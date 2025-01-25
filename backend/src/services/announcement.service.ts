@@ -48,31 +48,36 @@ async function getAnnouncementsByCategory(category: string, page: number = 1, li
 }
 
 async function createAnnouncement(
-  name: string,
+  title: string,
   images: string[],
   price: number,
   category: string,
   description: string,
-  location: string
+  location: string,
+  condition: string,
+  createdBy: string
 ) {
   const id = uuid();
 
   const announcement = new announcementSchema({
     id,
-    name,
+    title,
     images,
     price,
     category,
     description,
     location,
+    condition,
+    createdBy,
   });
 
   await announcement.save();
+  return announcement;
 }
 
 async function updateAnnouncement(
   id: string,
-  name: string,
+  title: string,
   images: string[],
   price: number,
   category: string,
@@ -85,7 +90,7 @@ async function updateAnnouncement(
     throw new Error("Announcement not found");
   }
 
-  announcement.name = name;
+  announcement.title = title;
   announcement.images = images;
   announcement.price = price;
   announcement.category = category;

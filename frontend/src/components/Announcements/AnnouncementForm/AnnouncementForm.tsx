@@ -15,6 +15,8 @@ import { AnnouncementDescription } from "@/components/Announcements/Announcement
 import { AnnouncementPrice } from "@/components/Announcements/AnnouncementForm/AnnouncementPrice";
 import { AnnouncementLocation } from "@/components/Announcements/AnnouncementForm/AnnouncementLocation";
 import { AnnouncementCondition } from "@/components/Announcements/AnnouncementForm/AnnouncementCondition";
+import { useToast } from "@/hooks/use-toast";
+import { useRouter } from "next/navigation";
 
 export const formSchema = z.object({
   title: z.string().min(8, {
@@ -39,8 +41,38 @@ export function AnnouncementForm({ categories }: { categories: CategoryType[] })
     defaultValues: {},
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+  const { toast } = useToast();
+  const router = useRouter();
+
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    const formData = new FormData();
+    formData.append("title", values.title);
+    formData.append("category", values.category);
+    formData.append("description", values.description);
+    formData.append("price", values.price.toString());
+    formData.append("location", values.location);
+    formData.append("condition", values.condition);
+    if (values.images) {
+      values.images.forEach((image, index) => {
+        formData.append(`images`, image);
+      });
+    }
+
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/announcement`, {
+      method: "POST",
+      body: formData,
+      credentials: "include",
+    });
+
+    if (!response.ok) {
+      toast({ description: "" });
+    }
+
+    const data = await response.json();
+    const announcementId = data.id;
+    router.push(`/announcement/create/success?announcementId=${announcementId}`);
+
+    //http://localhost:3000/announcement/create/success?announcementId=db4fe531-8e44-4ae1-91a2-8cdf867813c0
   }
 
   return (
